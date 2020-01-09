@@ -1,7 +1,8 @@
 ## Interface: 11302
 ## Title: ConsumeTracker
 ## Notes: Consumable tracker for raids
-## Author: Nekro
+## Author: Nekro [Herod]
 ## Version: 1.0
 
 ConsumeTracker.lua
+ConsumeTracker.xml
