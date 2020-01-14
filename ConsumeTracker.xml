@@ -37,11 +37,20 @@
           </Anchor>
         </Anchors>
       </Button>
-      <Button name="ContraFrameHideButton" text="Hide" inherits="GameMenuButtonTemplate">
+      <Button name="ContraFrameReportButton" text="Create Report" inherits="GameMenuButtonTemplate">
         <Anchors>
           <Anchor point="BOTTOM" relativeTo="ContraFrame" relativePoint="BOTTOM">
             <Offset>
               <AbsDimension x="100" y="20" />
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </Button>
+      <Button name="ContraFrameHideButton" text="Hide" inherits="GameMenuButtonTemplate">
+        <Anchors>
+          <Anchor point="BOTTOM" relativeTo="ContraFrame" relativePoint="BOTTOM">
+            <Offset>
+              <AbsDimension x="250" y="20" />
             </Offset>
           </Anchor>
         </Anchors>

@@ -3,34 +3,26 @@ local playerGUID = UnitGUID("player")
 local outputString = ""
 local buffs = {}
 
-local function has_value (tab, val)
-    for index, value in ipairs(tab) do
-        if value == val then
-            return true
-        end
-    end
-    return false
-end
-
 function ConsumeTracker:ShowMainFrame()
     ContraFrame:Show()
 end
 
+-- Add specific buffs to the table. These obviously won't be exact but will help keep people honest
 function ConsumeTracker:AddBuff(sourceGUID, spellName, timestamp)
     if spellName == "Fire Protection" or spellName == "Arcane Protection" then
-        buffs[sourceGUID]["flags"][timestamp .. " - " .. spellName] = true
+        buffs[sourceGUID]["flags"][spellName] = timestamp .. " - " .. spellName
     end
 end
 
 function ConsumeTracker:CreateReport()
     local reportString = ""
 
-    for index, source in ipairs(buffs) do
+    for index, source in pairs(buffs) do
         reportString = reportString .. "\n" .. "Player: " .. source["name"]
         reportString = reportString .. "\n" .. "Buffs: "
 
-        for i = 1, #source do
-            reportString = reportString .. source[i] .. ", "
+        for i, buff in pairs(source) do
+            reportString = reportString .. buff .. ", "
         end
 
         reportString = reportString .. "\n\n"
@@ -41,6 +33,7 @@ end
 
 function ContraFrame:COMBAT_LOG_EVENT_UNFILTERED(selfevent, timestamp, event, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellID, spellName, _spellSCHOOL, auraTYPE_failTYPE)
     timestamp, event, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellID, spellName, _spellSCHOOL, auraTYPE_failTYPE = CombatLogGetCurrentEventInfo()
+    
     if UnitIsPlayer(sourceGUID) and UnitInRaid(sourceGUID) and event == "SPELL_CAST_SUCCESS" then
         local ts = date("%Y/%m/%d %H:%M:%S", timestamp)
         outputString = outputString .. ts .. "\n" .. sourceName .. "\n".. spellName .. spellID .. "\n\n"
@@ -84,6 +77,12 @@ function ConsumeTracker:OnInitialize()
     )
     ContraFrameStopButton:SetScript("OnClick", function(self)
         ConsumeTracker:StopTracking()
+        end
+    )
+
+    ContraFrameReportButton:SetScript("OnClick", function(self)
+        ConsumeTracker:StopTracking()
+        ConsumeTracker:CreateReport()
         end
     )
 end
