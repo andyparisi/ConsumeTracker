@@ -9,9 +9,9 @@ end
 
 -- Add specific buffs to the table. These obviously won't be exact but will help keep people honest
 function ConsumeTracker:AddBuff(sourceGUID, spellName, timestamp)
-    if spellName == "Fire Protection" or spellName == "Arcane Protection" then
-        buffs[sourceGUID]["flags"][spellName] = timestamp .. " - " .. spellName
-    end
+    -- if spellName == "Fire Protection" or spellName == "Arcane Protection" then
+    buffs[sourceGUID]["flags"][spellName] = timestamp .. " - " .. spellName
+    -- end
 end
 
 function ConsumeTracker:CreateReport()
