@@ -9,9 +9,7 @@ end
 
 -- Add specific buffs to the table. These obviously won't be exact but will help keep people honest
 function ConsumeTracker:AddBuff(sourceGUID, spellName, timestamp)
-    -- if spellName == "Fire Protection" or spellName == "Arcane Protection" then
     buffs[sourceGUID]["flags"][spellName] = timestamp .. " - " .. spellName
-    -- end
 end
 
 function ConsumeTracker:CreateReport()
@@ -34,7 +32,7 @@ end
 function ContraFrame:COMBAT_LOG_EVENT_UNFILTERED(selfevent, timestamp, event, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellID, spellName, _spellSCHOOL, auraTYPE_failTYPE)
     timestamp, event, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellID, spellName, _spellSCHOOL, auraTYPE_failTYPE = CombatLogGetCurrentEventInfo()
     
-    if UnitIsPlayer(sourceGUID) and UnitInRaid(sourceGUID) and event == "SPELL_CAST_SUCCESS" then
+    if spellName == "Fire Protection" or spellName == "Arcane Protection" and event == "SPELL_CAST_SUCCESS" then
         local ts = date("%Y/%m/%d %H:%M:%S", timestamp)
         outputString = outputString .. ts .. "\n" .. sourceName .. "\n".. spellName .. spellID .. "\n\n"
         ContraFrameScrollText:SetText(outputString)
